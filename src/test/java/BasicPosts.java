@@ -1,5 +1,6 @@
 import io.restassured.http.ContentType;
 import model.Post;
+import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -9,7 +10,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 
-public class TestRestAssured {
+public class BasicPosts {
 
     @Test
     public void getPosts() {
@@ -22,7 +23,13 @@ public class TestRestAssured {
         // all  = logs body and parameters
         when().get("https://swapi.dev/api/").then().log().all();
 
-        // expects to have status code xxx -> if other, logs error
+        // expects to have status code xxx -> if not xxx, assertion will fail
+        when().get("https://swapi.dev/api/").then().log().all().statusCode(200);
+
+        // expects to have status code > xxx -> if not > xxx, assertion will fail (many Matcher. methods)
+        when().get("https://swapi.dev/api/").then().log().all().statusCode(Matchers.greaterThanOrEqualTo(200));
+
+        // expects to have status code xxx -> if other, logs error, if 200 -> logs nothing
         when().get("https://swapi.dev/api/").then().log().ifValidationFails().statusCode(200);
     }
 
