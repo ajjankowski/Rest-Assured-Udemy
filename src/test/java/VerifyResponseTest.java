@@ -1,11 +1,10 @@
-import model.Post;
 import model.PostSW;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 
-public class VerifyResponse {
+public class VerifyResponseTest {
 
     @Test
     public void getPostContains() {
@@ -25,6 +24,6 @@ public class VerifyResponse {
         PostSW newPost = given().log().all().when().get("https://swapi.dev/api/people/2")
                 .then().log().all().body("name", Matchers.equalTo("C-3PO"))
                 .and().body("height", Matchers.equalTo("167")).extract().body().as(PostSW.class);
-
+        System.out.println(newPost);
     }
 }

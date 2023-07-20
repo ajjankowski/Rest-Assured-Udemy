@@ -5,13 +5,17 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-public class FilterPosts {
+public class FilterPostsTest {
 
     @Test
     public void filterPosts() {
-        given().log().all().queryParam("name", "C-3PO")
-                .when().get("https://httpbin.org/get")
-                .then().log().all();
+        given().
+                log().all().
+                queryParam("name", "C-3PO").
+        when().
+                get("https://httpbin.org/get").
+        then().
+                log().all();
     }
 
     @Test

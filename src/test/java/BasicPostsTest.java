@@ -10,7 +10,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 
-public class BasicPosts {
+public class BasicPostsTest {
 
     @Test
     public void getPosts() {
