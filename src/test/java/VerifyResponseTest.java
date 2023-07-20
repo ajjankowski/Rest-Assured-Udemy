@@ -2,7 +2,10 @@ import model.PostSW;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 
 public class VerifyResponseTest {
 
@@ -25,5 +28,16 @@ public class VerifyResponseTest {
                 .then().log().all().body("name", Matchers.equalTo("C-3PO"))
                 .and().body("height", Matchers.equalTo("167")).extract().body().as(PostSW.class);
         System.out.println(newPost);
+    }
+
+    @Test
+    public void verifyResponseTime() {
+        long time = when().get("https://swapi.dev/api/people/2").timeIn(TimeUnit.MICROSECONDS);
+        System.out.println(time);
+
+        when()
+                .get("https://swapi.dev/api/people/2").
+        then()
+                .time(Matchers.lessThan(2000L), TimeUnit.MICROSECONDS);
     }
 }
